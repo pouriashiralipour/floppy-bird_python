@@ -10,20 +10,20 @@ import variables
 
 # GAME DISPLAY
 main_screen = pygame.display.set_mode(
-    (variables.DISPLAY_WITH, variables.DISPLAY_HEIGHT)
+    (variables.display_with, variables.display_height)
 )
 # START PYGAME MODULES
 pygame.init()
 
 # LOAD IMAGES
 background_image = pygame.transform.scale2x(
-    pygame.image.load(variables.BACKGROUND_IMAGE_ADDRESS)
+    pygame.image.load(variables.background_image_address)
 )
-floor_image = pygame.transform.scale2x(pygame.image.load(variables.FLOOR_IMAGE_ADDRESS))
-bird_image = pygame.transform.scale2x(pygame.image.load(variables.BIRD_IMAGE))
+floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
+bird_image = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
 
 # RECTANGLE FOR BIRD
-bird_image_ractangle = bird_image.get_rect(center=(100, variables.DISPLAY_HEIGHT / 2))
+bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
 
 # GAME TIMER
 clock = pygame.time.Clock()
@@ -39,16 +39,19 @@ while True:
     main_screen.blit(background_image, (0, 0))
     # SHOW BIRD IMAGE
     main_screen.blit(bird_image, bird_image_ractangle)
+    # FLOOR GRAVITY & BIRD MOVEMENT
+    variables.bird_movement += variables.gravity
+    bird_image_ractangle.centery += variables.bird_movement
     # SHOW FLOOR ON MAINSCREEN
-    variables.FLOOR_X -= 1
-    main_screen.blit(floor_image, (variables.FLOOR_X, variables.DISPLAY_HEIGHT - 150))
+    variables.floor_x -= 1
+    main_screen.blit(floor_image, (variables.floor_x, variables.display_height - 150))
     main_screen.blit(
         floor_image,
-        (variables.FLOOR_X + variables.DISPLAY_WITH, variables.DISPLAY_HEIGHT - 150),
+        (variables.floor_x + variables.display_with, variables.display_height - 150),
     )
 
-    if variables.FLOOR_X <= -variables.DISPLAY_WITH:
-        variables.FLOOR_X = 0
+    if variables.floor_x <= -variables.display_with:
+        variables.floor_x = 0
     pygame.display.update()
     # SET GAME SPEED
-    clock.tick(variables.CLOCK_TIME)
+    clock.tick(variables.clock_time)

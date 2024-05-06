@@ -1,7 +1,9 @@
-DISPLAY_WITH = 576
-DISPLAY_HEIGHT = 1000
-CLOCK_TIME = 90
-BACKGROUND_IMAGE_ADDRESS = "assets/img/backgroun1.png"
-FLOOR_IMAGE_ADDRESS = "assets/img/floor.png"
-BIRD_IMAGE = "assets/img/bird_mid_flap.png"
-FLOOR_X = 0
+display_with = 576
+display_height = 1000
+clock_time = 90
+background_image_address = "assets/img/backgroun1.png"
+floor_image_address = "assets/img/floor.png"
+bird_image = "assets/img/bird_mid_flap.png"
+floor_x = 0
+gravity = 0.25
+bird_movement = 0
