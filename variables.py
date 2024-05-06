@@ -1,4 +1,6 @@
 DISPLAY_WITH = 576
 DISPLAY_HEIGHT = 980
+FLOOR_X = 0
 CLOCK_TIME = 90
 BACKGROUND_IMAGE_ADDRESS = "assets/img/backgroun1.png"
+FLOOR_IMAGE_ADDRESS = "assets/img/floor.png"

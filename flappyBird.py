@@ -15,11 +15,11 @@ main_screen = pygame.display.set_mode(
 # START PYGAME MODULES
 pygame.init()
 
-# LOAD BACKGROUND IMAGE
+# LOAD IMAGES
 background_image = pygame.transform.scale2x(
     pygame.image.load(variables.BACKGROUND_IMAGE_ADDRESS)
 )
-
+floor_image = pygame.transform.scale2x(pygame.image.load(variables.FLOOR_IMAGE_ADDRESS))
 # GAME TIMER
 clock = pygame.time.Clock()
 
@@ -32,6 +32,8 @@ while True:
             sys.exit()
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
+    # SHOW FLOOR ON MAINSCREEN
+    main_screen.blit(floor_image, (variables.FLOOR_X, 800))
     pygame.display.update()
     # SET GAME SPEED
     clock.tick(variables.CLOCK_TIME)
