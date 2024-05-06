@@ -44,6 +44,8 @@ while True:
     main_screen.blit(background_image, (0, 0))
     # SHOW BIRD IMAGE
     main_screen.blit(bird_image, bird_image_ractangle)
+    # SHOW PIPE IMAGE
+    main_screen.blit(pip_image, (0, 0))
     # FLOOR GRAVITY & BIRD MOVEMENT
     variables.bird_movement += variables.gravity
     bird_image_ractangle.centery += variables.bird_movement
