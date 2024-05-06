@@ -34,6 +34,7 @@ while True:
     main_screen.blit(background_image, (0, 0))
     # SHOW FLOOR ON MAINSCREEN
     main_screen.blit(floor_image, (variables.FLOOR_X, 800))
+    variables.FLOOR_X -= 1
     pygame.display.update()
     # SET GAME SPEED
     clock.tick(variables.CLOCK_TIME)
