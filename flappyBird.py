@@ -1,5 +1,6 @@
 # instagram : @pouria.shirali
 
+import random
 import sys
 
 import pygame
@@ -8,12 +9,45 @@ import pygame.locals
 # GLOBAL VARIABLES
 import variables
 
+# START PYGAME MODULES
+pygame.init()
+
+
+# FUNCTION FOR PIPE
+def generate_pipe_rectangle():
+    random_pipes = random.randrange(400, 800)
+    pipe_rectangle_top = pip_image.get_rect(
+        midbottom=(variables.display_with + 200, random_pipes - 300)
+    )
+    pipe_rectangle_bottom = pip_image.get_rect(
+        midtop=(variables.display_with + 200, random_pipes)
+    )
+    return pipe_rectangle_bottom, pipe_rectangle_top
+
+
+# FUNCTION FOR MOVEMENT PIPE
+def move_pipe_rectangle(pipes):
+    for pipe in pipes:
+        pipe.centerx -= 5
+    inside_pipes = [pipe for pipe in pipes if pipe.right > -50]
+    return inside_pipes
+
+
+# FUNCTION FOR SHOW PIPE IMAGE
+def display_pipes(pipes):
+    for pipe in pipes:
+        if pipe.bottom >= variables.display_height:
+            main_screen.blit(pip_image, pipe)
+        else:
+            reversed_pipes_image = pygame.transform.flip(pip_image, False, True)
+            main_screen.blit(reversed_pipes_image, pipe)
+
+
 # GAME DISPLAY
 main_screen = pygame.display.set_mode(
     (variables.display_with, variables.display_height)
 )
-# START PYGAME MODULES
-pygame.init()
+
 
 # LOAD IMAGES
 background_image = pygame.transform.scale2x(
@@ -22,6 +56,10 @@ background_image = pygame.transform.scale2x(
 floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
 bird_image = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
 pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
+
+# CREATE PIPE
+create_pipe = pygame.USEREVENT
+pygame.time.set_timer(create_pipe, 1200)
 
 # RECTANGLE FOR BIRD
 bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
@@ -39,13 +77,18 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 variables.bird_movement = 0
-                variables.bird_movement -= 8
+                variables.bird_movement -= 6
+        if event.type == create_pipe:
+            variables.pipe_list.extend(generate_pipe_rectangle())
+
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
     # SHOW BIRD IMAGE
     main_screen.blit(bird_image, bird_image_ractangle)
-    # SHOW PIPE IMAGE
-    main_screen.blit(pip_image, (0, 0))
+    # MAKE TRANSFORM MOVE FOR PIPES
+    variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
+    # DIAPLAY PIPES
+    display_pipes(variables.pipe_list)
     # FLOOR GRAVITY & BIRD MOVEMENT
     variables.bird_movement += variables.gravity
     bird_image_ractangle.centery += variables.bird_movement

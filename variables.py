@@ -8,3 +8,4 @@ pipe_image = "assets/img/pipe_green.png"
 floor_x = 0
 gravity = 0.25
 bird_movement = 0
+pipe_list = []
