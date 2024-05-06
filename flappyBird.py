@@ -20,6 +20,11 @@ background_image = pygame.transform.scale2x(
     pygame.image.load(variables.BACKGROUND_IMAGE_ADDRESS)
 )
 floor_image = pygame.transform.scale2x(pygame.image.load(variables.FLOOR_IMAGE_ADDRESS))
+bird_image = pygame.transform.scale2x(pygame.image.load(variables.BIRD_IMAGE))
+
+# RECTANGLE FOR BIRD
+bird_image_ractangle = bird_image.get_rect(center=(100, variables.DISPLAY_HEIGHT / 2))
+
 # GAME TIMER
 clock = pygame.time.Clock()
 
@@ -32,6 +37,8 @@ while True:
             sys.exit()
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
+    # SHOW BIRD IMAGE
+    main_screen.blit(bird_image, bird_image_ractangle)
     # SHOW FLOOR ON MAINSCREEN
     variables.FLOOR_X -= 1
     main_screen.blit(floor_image, (variables.FLOOR_X, variables.DISPLAY_HEIGHT - 150))
