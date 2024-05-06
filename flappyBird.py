@@ -4,10 +4,14 @@ import sys
 
 import pygame
 
+import variables
+
 pygame.init()
 
 # create main screen with favorite size
-main_screen = pygame.display.set_mode((576, 980))
+main_screen = pygame.display.set_mode(
+    (variables.DISPLAY_WITH, variables.DISPLAY_HEIGHT)
+)
 clock = pygame.time.Clock()
 
 while True:
@@ -16,4 +20,4 @@ while True:
             pygame.quit()
             sys.exit()
     pygame.display.update()
-    clock.tick(90)
+    clock.tick(variables.CLOCK_TIME)
