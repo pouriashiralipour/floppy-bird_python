@@ -35,6 +35,10 @@ while True:
             # END PYGAME MODULES
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                variables.bird_movement = 0
+                variables.bird_movement -= 8
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
     # SHOW BIRD IMAGE
