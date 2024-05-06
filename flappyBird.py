@@ -33,12 +33,15 @@ while True:
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
     # SHOW FLOOR ON MAINSCREEN
-    main_screen.blit(floor_image, (variables.FLOOR_X, variables.DISPLAY_HEIGHT - 200))
+    variables.FLOOR_X -= 1
+    main_screen.blit(floor_image, (variables.FLOOR_X, variables.DISPLAY_HEIGHT - 150))
     main_screen.blit(
         floor_image,
-        (variables.FLOOR_X + variables.DISPLAY_WITH, variables.DISPLAY_HEIGHT - 200),
+        (variables.FLOOR_X + variables.DISPLAY_WITH, variables.DISPLAY_HEIGHT - 150),
     )
-    variables.FLOOR_X -= 1
+
+    if variables.FLOOR_X <= -variables.DISPLAY_WITH:
+        variables.FLOOR_X = 0
     pygame.display.update()
     # SET GAME SPEED
     clock.tick(variables.CLOCK_TIME)
