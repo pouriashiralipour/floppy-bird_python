@@ -4,6 +4,7 @@ clock_time = 90
 background_image_address = "assets/img/backgroun1.png"
 floor_image_address = "assets/img/floor.png"
 bird_image = "assets/img/bird_mid_flap.png"
+pipe_image = "assets/img/pipe_green.png"
 floor_x = 0
 gravity = 0.25
 bird_movement = 0

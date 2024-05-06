@@ -21,6 +21,7 @@ background_image = pygame.transform.scale2x(
 )
 floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
 bird_image = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
+pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
 
 # RECTANGLE FOR BIRD
 bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
