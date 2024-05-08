@@ -14,3 +14,4 @@ bird_list_index = 0
 pipe_list = []
 game_status = True
 game_font = "assets/font/Flappy.TTF"
+score = 0
