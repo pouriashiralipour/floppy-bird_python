@@ -59,9 +59,7 @@ def check_collision(pipes):
 # DISPLAY SCORE
 def display_score(status):
     if status == "active":
-        score_text = gmae_font.render(
-            f"Score: {variables.score}", False, (255, 255, 255)
-        )
+        score_text = gmae_font.render(f"{variables.score}", False, (255, 255, 255))
         score_text_rectangle = score_text.get_rect(center=(288, 100))
         main_screen.blit(score_text, score_text_rectangle)
     if status == "not_active":
@@ -75,7 +73,7 @@ def display_score(status):
         high_score_text = gmae_font.render(
             f"HiGh Score: {variables.high_score}", False, (229, 20, 20)
         )
-        high_score_text_rectangle = high_score_text.get_rect(center=(288, 50))
+        high_score_text_rectangle = high_score_text.get_rect(center=(288, 800))
         main_screen.blit(high_score_text, high_score_text_rectangle)
 
 
@@ -162,6 +160,8 @@ while True:
         variables.bird_movement += variables.gravity
         bird_image_ractangle.centery += variables.bird_movement
         # SHOW SCORE
+        display_score("active")
+    else:
         display_score("not_active")
     # SHOW FLOOR ON MAINSCREEN
     variables.floor_x -= 1
