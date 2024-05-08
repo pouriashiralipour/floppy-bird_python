@@ -54,6 +54,7 @@ def check_collision(pipes):
             bird_image_ractangle.top <= -50
             or bird_image_ractangle.bottom >= variables.display_height - 150
         ):
+            variables.active_score = True
             return False
     return True
 
@@ -121,6 +122,9 @@ bird_image_top = pygame.transform.scale2x(pygame.image.load(variables.bird_top_i
 bird_image_down = pygame.transform.scale2x(
     pygame.image.load(variables.bird_bottom_image)
 )
+game_over_image = pygame.transform.scale2x(
+    pygame.image.load(variables.gmae_over_image_address)
+)
 # CREATE LIST FOR BIRDS
 birds_list = [bird_image_down, bird_image_middle, bird_image_top]
 bird_image = birds_list[variables.bird_list_index]
@@ -133,7 +137,10 @@ create_flap = pygame.USEREVENT + 1
 pygame.time.set_timer(create_flap, 100)
 # RECTANGLE FOR BIRD
 bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
-
+# RECTANGLE FOR GAMEOVER IMAGE
+game_over_image_rectangle = game_over_image.get_rect(
+    center=(288, variables.display_height / 2)
+)
 # GAME TIMER
 clock = pygame.time.Clock()
 
@@ -148,7 +155,7 @@ while True:
             if event.key == pygame.K_SPACE:
                 variables.bird_movement = 0
                 variables.bird_movement -= 6
-            if event.key == pygame.K_r and variables.game_status == False:
+            if event.key == pygame.K_SPACE and variables.game_status == False:
                 variables.game_status = True
                 variables.pipe_list.clear()
                 bird_image_ractangle.center = 100, variables.display_height / 2
@@ -180,6 +187,7 @@ while True:
         update_score()
         display_score("active")
     else:
+        main_screen.blit(game_over_image, game_over_image_rectangle)
         display_score("not_active")
     # SHOW FLOOR ON MAINSCREEN
     variables.floor_x -= 1

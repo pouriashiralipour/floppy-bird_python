@@ -17,3 +17,6 @@ game_font = "assets/font/Flappy.TTF"
 score = 0
 high_score = 0
 active_score = True
+win_sound = "assets/sound/smb_stomp.wav"
+lose_sound = "assets/sound/smb_mariodie.wav"
+gmae_over_image_address = "assets/img/message.png"
