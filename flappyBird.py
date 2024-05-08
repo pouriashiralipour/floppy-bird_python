@@ -56,6 +56,13 @@ def check_collision(pipes):
     return True
 
 
+# SCORE
+def display_score():
+    score_text = gmae_font.render("Score: ", False, (255, 255, 255))
+    score_text_rectangle = score_text.get_rect(center=(288, 100))
+    main_screen.blit(score_text, score_text_rectangle)
+
+
 # BIRD ANIMATION
 def bird_animation():
     new_bird_image = birds_list[variables.bird_list_index]
@@ -138,7 +145,8 @@ while True:
         # FLOOR GRAVITY & BIRD MOVEMENT
         variables.bird_movement += variables.gravity
         bird_image_ractangle.centery += variables.bird_movement
-
+        # SHOW SCORE
+        display_score()
     # SHOW FLOOR ON MAINSCREEN
     variables.floor_x -= 1
     main_screen.blit(floor_image, (variables.floor_x, variables.display_height - 150))
