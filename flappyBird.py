@@ -43,6 +43,13 @@ def display_pipes(pipes):
             main_screen.blit(reversed_pipes_image, pipe)
 
 
+# FUNCTION FOR COLLISION ITEMS
+def check_collision(pipes):
+    for pipe in pipes:
+        if bird_image_ractangle.colliderect(pipe):
+            print("COLLISION")
+
+
 # GAME DISPLAY
 main_screen = pygame.display.set_mode(
     (variables.display_with, variables.display_height)
@@ -83,6 +90,8 @@ while True:
 
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
+    # CHECK COLLISION
+    check_collision(variables.pipe_list)
     # SHOW BIRD IMAGE
     main_screen.blit(bird_image, bird_image_ractangle)
     # MAKE TRANSFORM MOVE FOR PIPES
