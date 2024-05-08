@@ -91,7 +91,7 @@ while True:
             if event.key == pygame.K_SPACE:
                 variables.bird_movement = 0
                 variables.bird_movement -= 6
-            if event.type == pygame.K_r and variables.game_status == False:
+            if event.key == pygame.K_r and variables.game_status == False:
                 variables.game_status = True
                 variables.pipe_list.clear()
                 bird_image_ractangle.center = 100, variables.display_height / 2
