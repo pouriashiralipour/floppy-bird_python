@@ -15,3 +15,4 @@ pipe_list = []
 game_status = True
 game_font = "assets/font/Flappy.TTF"
 score = 0
+high_score = 0
