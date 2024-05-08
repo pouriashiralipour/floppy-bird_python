@@ -45,8 +45,10 @@ def display_pipes(pipes):
 
 # FUNCTION FOR COLLISION ITEMS
 def check_collision(pipes):
+
     for pipe in pipes:
         if bird_image_ractangle.colliderect(pipe):
+            variables.active_score = True
             return False
         if (
             bird_image_ractangle.top <= -50
@@ -75,6 +77,20 @@ def display_score(status):
         )
         high_score_text_rectangle = high_score_text.get_rect(center=(288, 800))
         main_screen.blit(high_score_text, high_score_text_rectangle)
+
+
+# UPDATE SCORE
+def update_score():
+    if variables.pipe_list:
+        for pipe in variables.pipe_list:
+            if 98 < pipe.centerx < 102 and variables.active_score:
+                variables.score += 1
+                variables.active_score = False
+            if pipe.centerx < 0:
+                variables.active_score = True
+    if variables.score > variables.high_score:
+        variables.high_score = variables.score
+    return variables.high_score
 
 
 # BIRD ANIMATION
@@ -137,6 +153,7 @@ while True:
                 variables.pipe_list.clear()
                 bird_image_ractangle.center = 100, variables.display_height / 2
                 variables.bird_movement = 0
+                variables.score = 0
         if event.type == create_pipe:
             variables.pipe_list.extend(generate_pipe_rectangle())
         if event.type == create_flap:
@@ -160,6 +177,7 @@ while True:
         variables.bird_movement += variables.gravity
         bird_image_ractangle.centery += variables.bird_movement
         # SHOW SCORE
+        update_score()
         display_score("active")
     else:
         display_score("not_active")
