@@ -56,6 +56,15 @@ def check_collision(pipes):
     return True
 
 
+# BIRD ANIMATION
+def bird_animation():
+    new_bird_image = birds_list[variables.bird_list_index]
+    new_bird_imgae_rectangle = new_bird_image.get_rect(
+        center=(100, bird_image_ractangle.centery)
+    )
+    return new_bird_image, new_bird_imgae_rectangle
+
+
 # GAME DISPLAY
 main_screen = pygame.display.set_mode(
     (variables.display_with, variables.display_height)
@@ -67,13 +76,23 @@ background_image = pygame.transform.scale2x(
     pygame.image.load(variables.background_image_address)
 )
 floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
-bird_image = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
-pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
 
+pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
+bird_image_middle = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
+bird_image_top = pygame.transform.scale2x(pygame.image.load(variables.bird_top_image))
+bird_image_down = pygame.transform.scale2x(
+    pygame.image.load(variables.bird_bottom_image)
+)
+# CREATE LIST FOR BIRDS
+birds_list = [bird_image_down, bird_image_middle, bird_image_top]
+bird_image = birds_list[variables.bird_list_index]
+# USER EVENTS
 # CREATE PIPE
 create_pipe = pygame.USEREVENT
 pygame.time.set_timer(create_pipe, 1200)
-
+# CREATE TRANSITION FOR BIRD
+create_flap = pygame.USEREVENT + 1
+pygame.time.set_timer(create_flap, 100)
 # RECTANGLE FOR BIRD
 bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
 
@@ -98,6 +117,12 @@ while True:
                 variables.bird_movement = 0
         if event.type == create_pipe:
             variables.pipe_list.extend(generate_pipe_rectangle())
+        if event.type == create_flap:
+            if variables.bird_list_index < 2:
+                variables.bird_list_index += 1
+            else:
+                variables.bird_list_index = 0
+            bird_image, bird_image_ractangle = bird_animation()
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
     if variables.game_status:
