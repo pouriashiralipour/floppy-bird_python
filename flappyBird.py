@@ -47,12 +47,13 @@ def display_pipes(pipes):
 def check_collision(pipes):
     for pipe in pipes:
         if bird_image_ractangle.colliderect(pipe):
-            print("COLLISION")
+            return False
         if (
             bird_image_ractangle.top <= -50
             or bird_image_ractangle.bottom >= variables.display_height - 150
         ):
-            print("COLLISION 2")
+            return False
+    return True
 
 
 # GAME DISPLAY
@@ -92,20 +93,21 @@ while True:
                 variables.bird_movement -= 6
         if event.type == create_pipe:
             variables.pipe_list.extend(generate_pipe_rectangle())
-
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
-    # CHECK COLLISION
-    check_collision(variables.pipe_list)
-    # SHOW BIRD IMAGE
-    main_screen.blit(bird_image, bird_image_ractangle)
-    # MAKE TRANSFORM MOVE FOR PIPES
-    variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
-    # DIAPLAY PIPES
-    display_pipes(variables.pipe_list)
-    # FLOOR GRAVITY & BIRD MOVEMENT
-    variables.bird_movement += variables.gravity
-    bird_image_ractangle.centery += variables.bird_movement
+    if variables.game_status:
+        # CHECK COLLISION
+        check_collision(variables.pipe_list)
+        # SHOW BIRD IMAGE
+        main_screen.blit(bird_image, bird_image_ractangle)
+        # MAKE TRANSFORM MOVE FOR PIPES
+        variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
+        # DIAPLAY PIPES
+        display_pipes(variables.pipe_list)
+        # FLOOR GRAVITY & BIRD MOVEMENT
+        variables.bird_movement += variables.gravity
+        bird_image_ractangle.centery += variables.bird_movement
+
     # SHOW FLOOR ON MAINSCREEN
     variables.floor_x -= 1
     main_screen.blit(floor_image, (variables.floor_x, variables.display_height - 150))

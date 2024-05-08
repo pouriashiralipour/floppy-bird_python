@@ -9,3 +9,4 @@ floor_x = 0
 gravity = 0.25
 bird_movement = 0
 pipe_list = []
+game_status = True
