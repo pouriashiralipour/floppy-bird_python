@@ -96,10 +96,10 @@ while True:
     # SHOW BACKGROUND ON MAINSCREEN
     main_screen.blit(background_image, (0, 0))
     if variables.game_status:
-        # CHECK COLLISION
-        check_collision(variables.pipe_list)
         # SHOW BIRD IMAGE
         main_screen.blit(bird_image, bird_image_ractangle)
+        # CHECK BIRD COLLISION
+        gmae_status = check_collision(variables.pipe_list)
         # MAKE TRANSFORM MOVE FOR PIPES
         variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
         # DIAPLAY PIPES
