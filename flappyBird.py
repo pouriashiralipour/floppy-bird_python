@@ -48,6 +48,11 @@ def check_collision(pipes):
     for pipe in pipes:
         if bird_image_ractangle.colliderect(pipe):
             print("COLLISION")
+        if (
+            bird_image_ractangle.top <= -50
+            or bird_image_ractangle.bottom >= variables.display_height - 150
+        ):
+            print("COLLISION 2")
 
 
 # GAME DISPLAY
