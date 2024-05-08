@@ -69,7 +69,8 @@ def bird_animation():
 main_screen = pygame.display.set_mode(
     (variables.display_with, variables.display_height)
 )
-
+# LOAD FONT
+gmae_font = pygame.font.Font(variables.game_font, 40)
 
 # LOAD IMAGES
 background_image = pygame.transform.scale2x(
