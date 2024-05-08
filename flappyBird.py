@@ -91,6 +91,11 @@ while True:
             if event.key == pygame.K_SPACE:
                 variables.bird_movement = 0
                 variables.bird_movement -= 6
+            if event.type == pygame.K_r and variables.game_status == False:
+                variables.game_status = True
+                variables.pipe_list.clear()
+                bird_image_ractangle.center = 100, variables.display_height / 2
+                variables.bird_movement = 0
         if event.type == create_pipe:
             variables.pipe_list.extend(generate_pipe_rectangle())
     # SHOW BACKGROUND ON MAINSCREEN
@@ -99,7 +104,7 @@ while True:
         # SHOW BIRD IMAGE
         main_screen.blit(bird_image, bird_image_ractangle)
         # CHECK BIRD COLLISION
-        gmae_status = check_collision(variables.pipe_list)
+        variables.game_status = check_collision(variables.pipe_list)
         # MAKE TRANSFORM MOVE FOR PIPES
         variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
         # DIAPLAY PIPES
