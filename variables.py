@@ -1,7 +1,7 @@
 display_with = 576
 display_height = 1000
 clock_time = 90
-background_image_address = "assets/img/backgroun1.png"
+background_image_address = "assets/img/background1.png"
 floor_image_address = "assets/img/floor.png"
 bird_image = "assets/img/bird_mid_flap.png"
 bird_top_image = "assets/img/red_bird_up_flap.png"
@@ -18,5 +18,5 @@ score = 0
 high_score = 0
 active_score = True
 win_sound = "assets/sound/smb_stomp.wav"
-lose_sound = "assets/sound/smb_mariodie.wav"
-gmae_over_image_address = "assets/img/message.png"
+lose_sound = "assets/sound/smb_married.wav"
+game_over_image_address = "assets/img/message.png"

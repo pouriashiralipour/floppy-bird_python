@@ -2,6 +2,7 @@
 
 import random
 import sys
+import time
 
 import pygame
 import pygame.locals
@@ -11,6 +12,49 @@ import variables
 
 # START PYGAME MODULES
 pygame.init()
+
+# GAME DISPLAY
+main_screen = pygame.display.set_mode(
+    (variables.display_with, variables.display_height)
+)
+# LOAD FONT
+game_font = pygame.font.Font(variables.game_font, 40)
+# LOAD SOUND
+win_sound = pygame.mixer.Sound(variables.win_sound)
+lose_sound = pygame.mixer.Sound(variables.lose_sound)
+# LOAD IMAGES
+background_image = pygame.transform.scale2x(
+    pygame.image.load(variables.background_image_address)
+)
+floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
+
+pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
+bird_image_middle = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
+bird_image_top = pygame.transform.scale2x(pygame.image.load(variables.bird_top_image))
+bird_image_down = pygame.transform.scale2x(
+    pygame.image.load(variables.bird_bottom_image)
+)
+game_over_image = pygame.transform.scale2x(
+    pygame.image.load(variables.game_over_image_address)
+)
+# CREATE LIST FOR BIRDS
+birds_list = [bird_image_down, bird_image_middle, bird_image_top]
+bird_image = birds_list[variables.bird_list_index]
+# USER EVENTS
+# CREATE PIPE
+create_pipe = pygame.USEREVENT
+pygame.time.set_timer(create_pipe, 1200)
+# CREATE TRANSITION FOR BIRD
+create_flap = pygame.USEREVENT + 1
+pygame.time.set_timer(create_flap, 100)
+# RECTANGLE FOR BIRD
+bird_image_rectangle = bird_image.get_rect(center=(100, variables.display_height / 2))
+# RECTANGLE FOR GAME OVER IMAGE
+game_over_image_rectangle = game_over_image.get_rect(
+    center=(288, variables.display_height / 2)
+)
+# GAME TIMER
+clock = pygame.time.Clock()
 
 
 # FUNCTION FOR PIPE
@@ -45,15 +89,18 @@ def display_pipes(pipes):
 
 # FUNCTION FOR COLLISION ITEMS
 def check_collision(pipes):
-
     for pipe in pipes:
-        if bird_image_ractangle.colliderect(pipe):
+        if bird_image_rectangle.colliderect(pipe):
+            lose_sound.play()
+            time.sleep(3)
             variables.active_score = True
             return False
         if (
-            bird_image_ractangle.top <= -50
-            or bird_image_ractangle.bottom >= variables.display_height - 150
+            bird_image_rectangle.top <= -50
+            or bird_image_rectangle.bottom >= variables.display_height - 150
         ):
+            lose_sound.play()
+            time.sleep(3)
             variables.active_score = True
             return False
     return True
@@ -62,18 +109,18 @@ def check_collision(pipes):
 # DISPLAY SCORE
 def display_score(status):
     if status == "active":
-        score_text = gmae_font.render(f"{variables.score}", False, (255, 255, 255))
+        score_text = game_font.render(f"{variables.score}", False, (255, 255, 255))
         score_text_rectangle = score_text.get_rect(center=(288, 100))
         main_screen.blit(score_text, score_text_rectangle)
     if status == "not_active":
         # SCORE
-        score_text = gmae_font.render(
+        score_text = game_font.render(
             f"Score: {variables.score}", False, (255, 255, 255)
         )
         score_text_rectangle = score_text.get_rect(center=(288, 100))
         main_screen.blit(score_text, score_text_rectangle)
         # HIGH SCORE
-        high_score_text = gmae_font.render(
+        high_score_text = game_font.render(
             f"HiGh Score: {variables.high_score}", False, (229, 20, 20)
         )
         high_score_text_rectangle = high_score_text.get_rect(center=(288, 800))
@@ -85,6 +132,7 @@ def update_score():
     if variables.pipe_list:
         for pipe in variables.pipe_list:
             if 98 < pipe.centerx < 102 and variables.active_score:
+                win_sound.play()
                 variables.score += 1
                 variables.active_score = False
             if pipe.centerx < 0:
@@ -98,53 +146,12 @@ def update_score():
 def bird_animation():
     new_bird_image = birds_list[variables.bird_list_index]
     new_bird_imgae_rectangle = new_bird_image.get_rect(
-        center=(100, bird_image_ractangle.centery)
+        center=(100, bird_image_rectangle.centery)
     )
     return new_bird_image, new_bird_imgae_rectangle
 
 
-# GAME DISPLAY
-main_screen = pygame.display.set_mode(
-    (variables.display_with, variables.display_height)
-)
-# LOAD FONT
-gmae_font = pygame.font.Font(variables.game_font, 40)
-
-# LOAD IMAGES
-background_image = pygame.transform.scale2x(
-    pygame.image.load(variables.background_image_address)
-)
-floor_image = pygame.transform.scale2x(pygame.image.load(variables.floor_image_address))
-
-pip_image = pygame.transform.scale2x(pygame.image.load(variables.pipe_image))
-bird_image_middle = pygame.transform.scale2x(pygame.image.load(variables.bird_image))
-bird_image_top = pygame.transform.scale2x(pygame.image.load(variables.bird_top_image))
-bird_image_down = pygame.transform.scale2x(
-    pygame.image.load(variables.bird_bottom_image)
-)
-game_over_image = pygame.transform.scale2x(
-    pygame.image.load(variables.gmae_over_image_address)
-)
-# CREATE LIST FOR BIRDS
-birds_list = [bird_image_down, bird_image_middle, bird_image_top]
-bird_image = birds_list[variables.bird_list_index]
-# USER EVENTS
-# CREATE PIPE
-create_pipe = pygame.USEREVENT
-pygame.time.set_timer(create_pipe, 1200)
-# CREATE TRANSITION FOR BIRD
-create_flap = pygame.USEREVENT + 1
-pygame.time.set_timer(create_flap, 100)
-# RECTANGLE FOR BIRD
-bird_image_ractangle = bird_image.get_rect(center=(100, variables.display_height / 2))
-# RECTANGLE FOR GAMEOVER IMAGE
-game_over_image_rectangle = game_over_image.get_rect(
-    center=(288, variables.display_height / 2)
-)
-# GAME TIMER
-clock = pygame.time.Clock()
-
-# GMAE LOGIC
+# GAME LOGIC
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -158,7 +165,7 @@ while True:
             if event.key == pygame.K_SPACE and variables.game_status == False:
                 variables.game_status = True
                 variables.pipe_list.clear()
-                bird_image_ractangle.center = 100, variables.display_height / 2
+                bird_image_rectangle.center = 100, variables.display_height / 2
                 variables.bird_movement = 0
                 variables.score = 0
         if event.type == create_pipe:
@@ -168,28 +175,28 @@ while True:
                 variables.bird_list_index += 1
             else:
                 variables.bird_list_index = 0
-            bird_image, bird_image_ractangle = bird_animation()
-    # SHOW BACKGROUND ON MAINSCREEN
+            bird_image, bird_image_rectangle = bird_animation()
+    # SHOW BACKGROUND ON MAIN SCREEN
     main_screen.blit(background_image, (0, 0))
     if variables.game_status:
         # SHOW BIRD IMAGE
-        main_screen.blit(bird_image, bird_image_ractangle)
+        main_screen.blit(bird_image, bird_image_rectangle)
         # CHECK BIRD COLLISION
         variables.game_status = check_collision(variables.pipe_list)
         # MAKE TRANSFORM MOVE FOR PIPES
         variables.pipe_list = move_pipe_rectangle(variables.pipe_list)
-        # DIAPLAY PIPES
+        # DISPLAY PIPES
         display_pipes(variables.pipe_list)
         # FLOOR GRAVITY & BIRD MOVEMENT
         variables.bird_movement += variables.gravity
-        bird_image_ractangle.centery += variables.bird_movement
+        bird_image_rectangle.centery += variables.bird_movement
         # SHOW SCORE
         update_score()
         display_score("active")
     else:
         main_screen.blit(game_over_image, game_over_image_rectangle)
         display_score("not_active")
-    # SHOW FLOOR ON MAINSCREEN
+    # SHOW FLOOR ON MAIN SCREEN
     variables.floor_x -= 1
     main_screen.blit(floor_image, (variables.floor_x, variables.display_height - 150))
     main_screen.blit(
